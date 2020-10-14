@@ -4,6 +4,8 @@ const BULLET = preload("res://bullet/Bullet.tscn")
 
 #export (float) var lifetime = 3
 
+signal kill
+
 func get_input():
 
 	look_at(get_global_mouse_position())
@@ -33,4 +35,7 @@ func _input(event):
 				bullet.global_position = $Muzzle.global_position
 				bullet.set_bullet_direction(direction)
 				bullet.rotation_degrees = rotation_degrees
-				
+				bullet.connect("kill", self, "kill")
+
+func kill():
+	emit_signal("kill")
